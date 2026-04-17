@@ -41,6 +41,10 @@ button:hover, a.btn:hover{
 }
 </style>
 </head>
+  
+<audio id="audio1" src="Sunflower.mp3" preload="auto"></audio>
+<audio id="audio2" src="The Reason.mp3" preload="auto"></audio>
+
 <body>
 <div class="wrap">
   <div class="card">
@@ -133,7 +137,8 @@ P.D.: Espero que estés bien, que te estés cuidando y no te estés saltando com
 <audio id="audio1" src="audio/micancion.mp3" preload="auto"></audio>
 
 <script>
-const audio = document.getElementById('audio1');
+const audio = document.getElementById('Sunflower.mp3');
+const audio = document.getElementById('The Reason.mp3');
 const finalButton = document.getElementById('finalButton');
 const whatsappBtn = document.getElementById('whatsappBtn');
 const callBtn = document.getElementById('callBtn');
@@ -145,7 +150,10 @@ window.addEventListener('load', () => {
     startFade();
   }, 5000);
 });
-
+// Cuando termine la primera, empieza la segunda
+audio1.addEventListener('ended', () => {
+  audio2.play().catch(()=>{});
+});
 // Fade out progresivo
 function startFade(){
   const letterText = document.getElementById('letter').innerText;
