@@ -137,7 +137,7 @@ P.D.: Espero que estés bien, que te estés cuidando y no te estés saltando com
 </div>
 
 <!-- Audio -->
-<audio id="audio1" src="The Reason.mp3" preload="auto"></audio>
+<audio id="audio1" src="The Reason.mp3" preload="auto" muted></audio>
 <audio id="audio2" src="Sunflower.mp3" preload="auto"></audio>
 
 <script>
@@ -150,6 +150,7 @@ const callBtn = document.getElementById('callBtn');
 // Música después de 5 segundos
 window.addEventListener('load', () => {
     setTimeout(() => {
+audio1.muted = false; // activar sonido después de 5 segundos
         audio1.play().catch(()=>{});
         startFade(audio1); // fade para la primera canción
     }, 5000);
