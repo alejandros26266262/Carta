@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Atún ❤️</title>
 <link rel="icon" href="android-icon-72x72.png" type="image/png">
+
 <style>
 :root{
-  --bg:#fff8ef; --paper:#fffdf8; --accent:#6b4f4f; --text:#222; --font:"Georgia", serif; --padding:28px;
+--bg:#fff8ef; --paper:#fffdf8; --accent:#6b4f4f; --text:#222; --font:"Georgia", serif; --padding:28px;
 }
 html,body{height:100%;margin:0;font-family:var(--font);background:var(--bg);color:var(--text);}
 .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -17,42 +19,41 @@ html,body{height:100%;margin:0;font-family:var(--font);background:var(--bg);colo
 .letter{font-size:18px;line-height:1.7;color:var(--text);}
 .footer{text-align:center;margin-top:20px;}
 button, a.btn{
-  display:inline-block;
-  background:#ff81b6;
-  color:#fff;
-  border:0;
-  padding:12px 20px;
-  margin:10px;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:16px;
-  text-decoration:none;
-  font-weight:600;
-  transition:transform 0.2s, background 0.2s;
+display:inline-block;
+background:#ff81b6;
+color:#fff;
+border:0;
+padding:12px 20px;
+margin:10px;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+text-decoration:none;
+font-weight:600;
+transition:transform 0.2s, background 0.2s;
 }
 button:hover, a.btn:hover{
-  background:#f2619e;
-  transform:scale(1.05);
+background:#f2619e;
+transform:scale(1.05);
 }
 .hidden{display:none;}
 @media (max-width:520px){
-  .card{padding:16px;}
-  .letter{font-size:16px;}
+.card{padding:16px;}
+.letter{font-size:16px;}
 }
 </style>
 </head>
-  
-<audio id="audio1" src="The Reason.mp3" preload="auto"></audio>
-<audio id="audio2" src="Sunflower.mp3" preload="auto"></audio>
 
 <body>
+
 <div class="wrap">
-  <div class="card">
-    <div class="title">De ATÚN para TÚ ❤️</div>
-    <div class="paper">
-      <div class="letter" id="letter">
-        <!-- Aquí pega tu carta completa -->
-        Hace unos días, dentro de mis pensamientos, sentí que perdía la memoria, pero no del todo; era como reconstruir una historia larga con escenas sueltas, y en ese intento terminé de ordenar algo que ya venía sintiendo desde hace tiempo, pero que ahora tengo claro de verdad.
+<div class="card">
+<div class="title">De ATÚN para TÚ ❤️</div>
+<div class="paper">
+<div class="letter" id="letter">
+
+<!-- Aquí va carta -->
+Hace unos días, dentro de mis pensamientos, sentí que perdía la memoria, pero no del todo; era como reconstruir una historia larga con escenas sueltas, y en ese intento terminé de ordenar algo que ya venía sintiendo desde hace tiempo, pero que ahora tengo claro de verdad.
 Uno nunca pierde completamente el camino, solo deja de verlo por todo lo que se acumula encima. Ese camino a veces se llena de hierba, de piedras, de cosas que no supimos manejar en su momento; no porque no quisiéramos, sino porque no teníamos la altura, la experiencia o la claridad suficiente para hacerlo mejor.
 Y en medio de esa hierba pasan cosas. Aparecen situaciones, personas, momentos que lastiman, que dejan miedo, que cambian la forma en la que uno vuelve a caminar. Y aunque después el camino se vea más limpio, la sensación no desaparece tan fácil, porque la mente aprende del dolor y se protege, incluso cuando ya no es necesario.
 Por eso hoy tengo claro muchas cosas. Tengo claro que no basta con querer avanzar, sino que hay que entender cómo camina el otro, con qué carga, con qué heridas, con qué miedo. Porque si no, terminamos exigiendo pasos que la otra persona aún no puede dar. A veces uno quiere correr, mientras el otro recién está aprendiendo a caminar sin sentir que la hierba lo va a cubrir otra vez, y no es falta de ganas, es proceso.
@@ -123,59 +124,66 @@ Y bueno… me debes un beso por cada palabra de esto que leíste,
 aunque haya pasado en mis sueños… pero ya sabes el resto.
 
 P.D.: Espero que estés bien, que te estés cuidando y no te estés saltando comidas.
-      </div>
-    </div>
-    <div class="footer">
-      <button id="finalButton">Cuando estés lista si lo estás presiona este botón, no antes</button><br>
-      <a id="whatsappBtn" class="btn hidden" href="https://wa.me/+51937587368" target="_blank">Enviar WhatsApp</a>
-      <a id="callBtn" class="btn hidden" href="tel:+51967028512">Llamar</a>
-    </div>
-  </div>
+
+</div>
+</div>
+
+<div class="footer">
+<button id="finalButton">Cuando estés lista si lo estás presiona este botón, no antes</button><br>
+<a id="whatsappBtn" class="btn hidden" href="https://wa.me/+51937587368" target="_blank">Enviar WhatsApp</a>
+<a id="callBtn" class="btn hidden" href="tel:+51967028512">Llamar</a>
+</div>
+</div>
 </div>
 
 <!-- Audio -->
 <audio id="audio1" src="The Reason.mp3" preload="auto"></audio>
 <audio id="audio2" src="Sunflower.mp3" preload="auto"></audio>
+
 <script>
-const audio = document.getElementById('audio1');
-const audio = document.getElementById('audio2');
+const audio1 = document.getElementById('audio1');
+const audio2 = document.getElementById('audio2');
 const finalButton = document.getElementById('finalButton');
 const whatsappBtn = document.getElementById('whatsappBtn');
 const callBtn = document.getElementById('callBtn');
 
 // Música después de 5 segundos
 window.addEventListener('load', () => {
-  setTimeout(() => {
-    audio.play().catch(()=>{});
-    startFade();
-  }, 5000);
+    setTimeout(() => {
+        audio1.play().catch(()=>{});
+        startFade(audio1); // fade para la primera canción
+    }, 5000);
 });
+
 // Cuando termine la primera, empieza la segunda
 audio1.addEventListener('ended', () => {
-  audio2.play().catch(()=>{});
+    audio2.play().catch(()=>{});
+    startFade(audio2); // fade para la segunda canción
 });
-// Fade out progresivo
-function startFade(){
-  const letterText = document.getElementById('letter').innerText;
-  const words = letterText.trim().split(/\s+/).length;
-  const readingTimeSec = Math.max(10, Math.round((words/200)*60));
-  const start = performance.now();
 
-  function step(now){
-    const t = Math.min(1, (now - start) / (readingTimeSec*1000));
-    audio.volume = Math.max(0, 1 - t);
-    if(t < 1) requestAnimationFrame(step);
-    else audio.pause();
-  }
-  requestAnimationFrame(step);
+// Fade out progresivo
+function startFade(audioElement){
+    const letterText = document.getElementById('letter').innerText;
+    const words = letterText.trim().split(/\s+/).length;
+    const readingTimeSec = Math.max(10, Math.round((words/200)*60));
+    const start = performance.now();
+
+    function step(now){
+        const t = Math.min(1, (now - start) / (readingTimeSec*1000));
+        audioElement.volume = Math.max(0, 1 - t);
+        if(t < 1) requestAnimationFrame(step);
+        else audioElement.pause();
+    }
+    requestAnimationFrame(step);
 }
 
 // Botón final
 finalButton.addEventListener('click', () => {
-  alert("Gracias por leerme hasta el final, esto lo hice con intención, a mi manera, sin hacerlo perfecto… pero siendo yo. No hay presión en esto, tómate tu tiempo. Abajo tienes dos opciones, elige cuando te sientas lista. ❤️");
-  whatsappBtn.classList.remove('hidden');
-  callBtn.classList.remove('hidden');
+    alert("Gracias por leerme hasta el final, esto lo hice con intención, a mi manera, sin hacerlo perfecto… pero siendo yo. No hay presión en esto, tómate tu tiempo. Abajo tienes dos opciones, elige cuando te sientas lista. ❤️");
+    whatsappBtn.classList.remove('hidden');
+    callBtn.classList.remove('hidden');
 });
 </script>
+
 </body>
 </html>
