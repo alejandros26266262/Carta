@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Carta interactiva — estilos</title>
+<style>
+  :root{
+    --bg:#fff8ef; --paper:#fffdf8; --accent:#6b4f4f; --text:#222; --font: "Georgia", serif; --padding:28px;
+  }
+  html,body{height:100%;margin:0;font-family:var(--font);background:var(--bg);color:var(--text);}
+  .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px;}
+  .card{width:720px;max-width:95%;background:var(--paper);box-shadow:0 10px 30px rgba(0,0,0,0.12);border-radius:12px;padding:var(--padding);position:relative;overflow:hidden;}
+  .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .title{font-size:20px;color:var(--accent);font-weight:700;}
+  .controls{display:flex;gap:8px;align-items:center;}
+  button, .btn {background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;}
+  .btn.secondary{background:#888;}
+  .editor{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+  .editor input[type="color"], .editor input[type="text"], .editor input[type="url"], select{padding:6px;border-radius:6px;border:1px solid #ddd;}
+  .paper{height:420px;overflow:hidden;padding:28px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);position:relative;}
+  .letter{max-width:640px;margin:0 auto;font-size:18px;line-height:1.7;color:var(--text);transition:color .2s, font-size .2s;}
+  .letter[contenteditable="true"]{outline:2px dashed rgba(0,0,0,0.06);padding:8px;border-radius:6px;}
+  .footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px;flex-wrap:wrap;}
+  .status{font-size:14px;color:#666;}
+  .final-actions{display:flex;gap:8px;}
+  .final-actions a{display:inline-block;text-decoration:none;padding:10px 14px;border-radius:8px;background:#0a84ff;color:#fff;font-weight:700;}
+  .hidden{display:none !important;}
+  .bg-preview{position:absolute;inset:0;opacity:0.06;background-size:cover;background-position:center;pointer-events:none;}
+  .small{font-size:13px;padding:6px 8px;border-radius:6px;background:#eee;color:#333;border:0;}
+  .play-overlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.95);padding:12px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.12);}
+  /* Minimalista */
+  .preset-minimal { --bg:#f6f7fb; --paper:#ffffff; --accent:#0a84ff; --text:#111; --font: "Inter", system-ui, sans-serif; }
+  /* Romántico */
+  .preset-romantic { --bg:#fff6f4; --paper:#fffdf9; --accent:#8b3a3a; --text:#2b1f1f; --font: "Georgia", serif; }
+  /* Ajustes visuales por preset */
+  .preset-romantic .paper{background-image:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,240,240,0.96));box-shadow:0 12px 30px rgba(139,58,58,0.06);}
+  .preset-romantic .bg-preview{opacity:0.08;}
+  .preset-minimal .bg-preview{opacity:0.02;}
+  /* Responsive */
+  @media (max-width:520px){ .paper{height:60vh;padding:18px;} .title{font-size:18px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card preset-romantic" id="card">
+    <div class="bg-preview" id="bgPreview"></div>
+
+    <div class="header">
+      <div class="title">Carta interactiva</div>
+      <div class="controls">
+        <select id="styleSelect" title="Estilo">
+          <option value="romantic">Romántico</option>
+          <option value="minimal">Minimalista</option>
+        </select>
+        <button id="editToggle" class="btn">Editar</button>
+        <button id="saveLink" class="btn secondary">Guardar y generar enlace</button>
+        <button id="copyLink" class="btn secondary">Compartir enlace</button>
+      </div>
+    </div>
+
+    <div class="editor" id="editorPanel">
+      <label>Color fondo <input type="color" id="bgColor" value="#fff6f4"></label>
+      <label>Color papel <input type="color" id="paperColor" value="#fffdf9"></label>
+      <label>Color acento <input type="color" id="accentColor" value="#8b3a3a"></label>
+      <label>Fuente <input type="text" id="fontFamily" placeholder="Georgia, serif" value="Georgia, serif"></label>
+      <label>Tamaño letra <input type="text" id="fontSize" placeholder="18px" value="18px"></label>
+      <label>Imagen fondo URL <input type="url" id="bgImage" placeholder="https://..."></label>
+    </div>
+
+    <div class="paper" id="paper">
+      <div class="letter" id="letter" contenteditable="false">
+        Querida persona,
+        <br><br>
+        Este es un ejemplo de carta. Aquí puedes pegar el texto que quieras que la otra persona lea. El sistema calculará el tiempo estimado de lectura y, tras unos segundos, empezará la música que hayas elegido. La página hará un desplazamiento pasivo y la música se irá atenuando hasta terminar.
+        <br><br>
+        Respeta las reglas por favor.
+        <br><br>
+        Con cariño,
+        <br>
+        Alejandro
+      </div>
+      <div class="play-overlay hidden" id="playOverlay">
+        <div style="text-align:center;margin-bottom:8px;">Reproducción bloqueada por el navegador</div>
+        <button id="manualPlay" class="btn">Permitir reproducir</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="share">
+        <div class="status" id="status">Estado: listo</div>
+      </div>
+
+      <div class="final-actions">
+        <button id="finalButton" class="small hidden">Cuando estés lista si lo estás presiona este botón, no antes</button>
+        <a id="whatsappBtn" class="hidden" href="#" target="_blank">Enviar WhatsApp</a>
+        <a id="callBtn" class="hidden" href="#">Llamar</a>
+      </div>
+    </div>
+
+    <!-- Audios: reemplaza src por tus canciones -->
+    <audio id="audio1" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3f2b9f7f7a.mp3?filename=relaxing-ambient-11006.mp3" preload="auto"></audio>
+    <audio id="audio2" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_2f2b9b3a4a.mp3?filename=soft-piano-11090.mp3" preload="auto"></audio>
+
+  </div>
+</div>
+
+<script>
+const config = {
+  startDelay: 3,
+  readingWpm: 200,
+  audios: ['audio1','audio2'],
+  whatsappNumber: '+51900000000',
+  phoneNumber: '+51900000000'
+};
+
+const card = document.getElementById('card');
+const styleSelect = document.getElementById('styleSelect');
+const letterEl = document.getElementById('letter');
+const editToggle = document.getElementById('editToggle');
+const editorPanel = document.getElementById('editorPanel');
+const saveLink = document.getElementById('saveLink');
+const copyLink = document.getElementById('copyLink');
+const bgColor = document.getElementById('bgColor');
+const paperColor = document.getElementById('paperColor');
+const accentColor = document.getElementById('accentColor');
+const fontFamily = document.getElementById('fontFamily');
+const fontSize = document.getElementById('fontSize');
+const bgImage = document.getElementById('bgImage');
+const bgPreview = document.getElementById('bgPreview');
+const status = document.getElementById('status');
+const finalButton = document.getElementById('finalButton');
+const whatsappBtn = document.getElementById('whatsappBtn');
+const callBtn = document.getElementById('callBtn');
+const playOverlay = document.getElementById('playOverlay');
+const manualPlay = document.getElementById('manualPlay');
+
+let editing = false;
+let readingTimeSec = 0;
+let autoScrollRAF = null;
+let fadeRAF = null;
+let audioElements = config.audios.map(id => document.getElementById(id));
+
+/* Presets */
+function applyPreset(name){
+  card.classList.remove('preset-romantic','preset-minimal');
+  if(name === 'minimal') card.classList.add('preset-minimal');
+  else card.classList.add('preset-romantic');
+  // set default colors/fonts for each preset
+  if(name === 'minimal'){
+    bgColor.value = '#f6f7fb'; paperColor.value = '#ffffff'; accentColor.value = '#0a84ff';
+    fontFamily.value = 'Inter, system-ui, sans-serif'; fontSize.value = '17px'; bgImage.value = '';
+  } else {
+    bgColor.value = '#fff6f4'; paperColor.value = '#fffdf9'; accentColor.value = '#8b3a3a';
+    fontFamily.value = 'Georgia, serif'; fontSize.value = '18px'; bgImage.value = '';
+  }
+  applyStylesFromInputs();
+}
+
+/* Apply styles */
+function applyStylesFromInputs(){
+  document.documentElement.style.setProperty('--bg', bgColor.value);
+  document.documentElement.style.setProperty('--paper', paperColor.value);
+  document.documentElement.style.setProperty('--accent', accentColor.value);
+  document.documentElement.style.setProperty('--font', fontFamily.value || 'Georgia, serif');
+  letterEl.style.fontSize = fontSize.value || '18px';
+  const img = bgImage.value.trim();
+  bgPreview.style.backgroundImage = img ? `url(${img})` : '';
+}
+
+/* Reading time */
+function calculateReadingTime(text){
+  const words = (text.trim().split(/\s+/).filter(Boolean)).length;
+  const minutes = words / config.readingWpm;
+  return Math.max(3, Math.round(minutes * 60));
+}
+
+/* Auto-scroll */
+function startAutoScroll(durationSec){
+  const container = document.querySelector('.paper');
+  const start = container.scrollTop;
+  const maxScroll = container.scrollHeight - container.clientHeight;
+  const distance = Math.max(0, maxScroll - start);
+  const startTime = performance.now();
+  if(autoScrollRAF) cancelAnimationFrame(autoScrollRAF);
+  function step(now){
+    const t = Math.min(1, (now - startTime) / (durationSec * 1000));
+    container.scrollTop = start + distance * t;
+    if(t < 1) autoScrollRAF = requestAnimationFrame(step);
+  }
+  autoScrollRAF = requestAnimationFrame(step);
+}
+
+/* Play sequence with global fade */
+async function playSequence(totalDurationSec){
+  status.textContent = 'Estado: preparando reproducción...';
+  await delay(config.startDelay * 1000);
+  try {
+    for(const a of audioElements){ a.pause(); a.currentTime = 0; a.volume = 1; }
+    await audioElements[0].play();
+    startFade(totalDurationSec);
+    const perAudio = Math.max(1, Math.floor(totalDurationSec / audioElements.length));
+    for(let i=0;i<audioElements.length;i++){
+      const a = audioElements[i];
+      if(a.paused) await a.play().catch(()=>{});
+      await delay(perAudio * 1000);
+      if(i < audioElements.length - 1) a.pause();
+    }
+    stopAllAudio();
+    onFinish();
+  } catch (e) {
+    playOverlay.classList.remove('hidden');
+    status.textContent = 'Estado: reproducción bloqueada, requiere interacción.';
+  }
+}
+
+function startFade(totalDurationSec){
+  const start = performance.now();
+  if(fadeRAF) cancelAnimationFrame(fadeRAF);
+  function step(now){
+    const t = Math.min(1, (now - start) / (totalDurationSec * 1000));
+    const vol = Math.max(0, 1 - t);
+    audioElements.forEach(a => a.volume = vol);
+    if(t < 1) fadeRAF = requestAnimationFrame(step);
+  }
+  fadeRAF = requestAnimationFrame(step);
+}
+
+function stopAllAudio(){ audioElements.forEach(a => { a.pause(); a.currentTime = 0; a.volume = 1; }); }
+
+function onFinish(){
+  status.textContent = 'Estado: lectura finalizada';
+  finalButton.classList.remove('hidden');
+  whatsappBtn.classList.remove('hidden');
+  callBtn.classList.remove('hidden');
+  whatsappBtn.href = `https://wa.me/${encodeURIComponent(config.whatsappNumber.replace(/\D/g,''))}`;
+  callBtn.href = `tel:${encodeURIComponent(config.phoneNumber.replace(/\s/g,''))}`;
+}
+
+function delay(ms){ return new Promise(res => setTimeout(res, ms)); }
+
+/* Save/load state in URL */
+function saveStateToUrl(){
+  const state = { text: letterEl.innerHTML, styles: { bgColor: bgColor.value, paperColor: paperColor.value, accentColor: accentColor.value, fontFamily: fontFamily.value, fontSize: fontSize.value, bgImage: bgImage.value, preset: styleSelect.value } };
+  const json = JSON.stringify(state);
+  const encoded = btoa(unescape(encodeURIComponent(json)));
+  const url = location.origin + location.pathname + '#data=' + encoded;
+  history.replaceState(null, '', url);
+  status.textContent = 'Estado: enlace actualizado';
+  return url;
+}
+
+function loadStateFromUrl(){
+  const hash = location.hash || '';
+  if(!hash.includes('data=')) return;
+  try{
+    const encoded = hash.split('data=')[1];
+    const json = decodeURIComponent(escape(atob(encoded)));
+    const state = JSON.parse(json);
+    if(state.text) letterEl.innerHTML = state.text;
+    if(state.styles){
+      bgColor.value = state.styles.bgColor || bgColor.value;
+      paperColor.value = state.styles.paperColor || paperColor.value;
+      accentColor.value = state.styles.accentColor || accentColor.value;
+      fontFamily.value = state.styles.fontFamily || fontFamily.value;
+      fontSize.value = state.styles.fontSize || fontSize.value;
+      bgImage.value = state.styles.bgImage || bgImage.value;
+      styleSelect.value = state.styles.preset || styleSelect.value;
+      applyPreset(styleSelect.value);
+      applyStylesFromInputs();
+    }
+    status.textContent = 'Estado: contenido cargado desde enlace';
+  }catch(e){ console.warn('No se pudo cargar estado', e); }
+}
+
+/* UI events */
+styleSelect.addEventListener('change', ()=> applyPreset(styleSelect.value));
+editToggle.addEventListener('click', ()=>{
+  editing = !editing;
+  letterEl.contentEditable = editing ? "true" : "false";
+  editToggle.textContent = editing ? 'Listo' : 'Editar';
+  editorPanel.style.display = editing ? 'flex' : 'none';
+  if(!editing) preparePlayback();
+});
+[bgColor,paperColor,accentColor,fontFamily,fontSize,bgImage].forEach(inp=> inp.addEventListener('input', applyStylesFromInputs));
+saveLink.addEventListener('click', ()=> { saveStateToUrl(); alert('Enlace generado y guardado en la barra de direcciones.'); });
+copyLink.addEventListener('click', async ()=> { const url = saveStateToUrl(); try{ await navigator.clipboard.writeText(url); status.textContent = 'Estado: enlace copiado al portapapeles'; }catch(e){ alert('Copia manual: ' + url); } });
+
+function preparePlayback(){
+  finalButton.classList.add('hidden'); whatsappBtn.classList.add('hidden'); callBtn.classList.add('hidden');
+  status.textContent = 'Estado: listo';
+  const text = letterEl.innerText || letterEl.textContent || '';
+  readingTimeSec = calculateReadingTime(text);
+  startAutoScroll(readingTimeSec);
+  playSequence(readingTimeSec).catch(()=>{});
+}
+
+manualPlay.addEventListener('click', async ()=>{
+  playOverlay.classList.add('hidden');
+  status.textContent = 'Estado: reproducción manual iniciada';
+  try{
+    for(const a of audioElements) await a.play().catch(()=>{});
+    startFade(readingTimeSec);
+    setTimeout(()=>{ stopAllAudio(); onFinish(); }, readingTimeSec*1000);
+  }catch(e){ console.warn(e); }
+});
+
+finalButton.addEventListener('click', ()=> { alert('Gracias. Ahora puedes elegir enviar un mensaje por WhatsApp o llamar.'); });
+
+/* Inicialización */
+applyPreset('romantic');
+applyStylesFromInputs();
+loadStateFromUrl();
+preparePlayback();
+</script>
+</body>
+</html>
