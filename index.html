@@ -1,374 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ATÚN ❤️</title>
+<title>Carta ❤️</title>
 <style>
-  :root{
-    --bg:#fff8ef; --paper:#fffdf8; --accent:#6b4f4f; --text:#222; --font: "Georgia", serif; --padding:28px;
-  }
-  html,body{height:100%;margin:0;font-family:var(--font);background:var(--bg);color:var(--text);}
-  .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px;}
-  .card{width:720px;max-width:95%;background:var(--paper);box-shadow:0 10px 30px rgba(0,0,0,0.12);border-radius:12px;padding:var(--padding);position:relative;overflow:hidden;}
-  .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-  .title{font-size:20px;color:var(--accent);font-weight:700;}
-  .controls{display:flex;gap:8px;align-items:center;}
-  button, .btn {background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;}
-  .btn.secondary{background:#888;}
-  .editor{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
-  .editor input[type="color"], .editor input[type="text"], .editor input[type="url"], select{padding:6px;border-radius:6px;border:1px solid #ddd;}
-  .paper{height:420px;overflow:hidden;padding:28px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);position:relative;}
-  .letter{max-width:640px;margin:0 auto;font-size:18px;line-height:1.7;color:var(--text);transition:color .2s, font-size .2s;}
-  .letter[contenteditable="true"]{outline:2px dashed rgba(0,0,0,0.06);padding:8px;border-radius:6px;}
-  .footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px;flex-wrap:wrap;}
-  .status{font-size:14px;color:#666;}
-  .final-actions{display:flex;gap:8px;}
-  .final-actions a{display:inline-block;text-decoration:none;padding:10px 14px;border-radius:8px;background:#0a84ff;color:#fff;font-weight:700;}
-  .hidden{display:none !important;}
-  .bg-preview{position:absolute;inset:0;opacity:0.06;background-size:cover;background-position:center;pointer-events:none;}
-  .small{font-size:13px;padding:6px 8px;border-radius:6px;background:#eee;color:#333;border:0;}
-  .play-overlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.95);padding:12px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.12);}
-  /* Minimalista */
-  .preset-minimal { --bg:#f6f7fb; --paper:#ffffff; --accent:#0a84ff; --text:#111; --font: "Inter", system-ui, sans-serif; }
-  /* Romántico */
-  .preset-romantic { --bg:#fff6f4; --paper:#fffdf9; --accent:#8b3a3a; --text:#2b1f1f; --font: "Georgia", serif; }
-  /* Ajustes visuales por preset */
-  .preset-romantic .paper{background-image:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,240,240,0.96));box-shadow:0 12px 30px rgba(139,58,58,0.06);}
-  .preset-romantic .bg-preview{opacity:0.08;}
-  .preset-minimal .bg-preview{opacity:0.02;}
-  /* Responsive */
-  @media (max-width:520px){ .paper{height:60vh;padding:18px;} .title{font-size:18px;} }
+:root{
+  --bg:#fff8ef; --paper:#fffdf8; --accent:#6b4f4f; --text:#222; --font:"Georgia", serif; --padding:28px;
+}
+html,body{height:100%;margin:0;font-family:var(--font);background:var(--bg);color:var(--text);}
+.wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px;}
+.card{width:720px;max-width:95%;background:var(--paper);box-shadow:0 10px 30px rgba(0,0,0,0.12);border-radius:12px;padding:var(--padding);}
+.title{font-size:20px;color:var(--accent);font-weight:700;margin-bottom:12px;text-align:center;}
+.paper{max-height:70vh;overflow-y:auto;padding:20px;border-radius:8px;background:rgba(255,255,255,0.95);}
+.letter{font-size:18px;line-height:1.7;color:var(--text);}
+.footer{text-align:center;margin-top:20px;}
+button{background:var(--accent);color:#fff;border:0;padding:10px 16px;border-radius:6px;cursor:pointer;font-size:15px;}
+button:hover{opacity:0.9;}
+@media (max-width:520px){
+  .card{padding:16px;}
+  .letter{font-size:16px;}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="card preset-romantic" id="card">
-    <div class="bg-preview" id="bgPreview"></div>
-
-    <div class="header">
-      <div class="title">De atún para tú ❤️</div>
-      <div class="controls">
-        <select id="styleSelect" title="Estilo">
-          <option value="romantic">Romántico</option>
-          <option value="minimal">Minimalista</option>
-        </select>
-        <button id="editToggle" class="btn">Editar</button>
-        <button id="saveLink" class="btn secondary">Guardar y generar enlace</button>
-        <button id="copyLink" class="btn secondary">Compartir enlace</button>
+  <div class="card">
+    <div class="title">De Alejandro para ti ❤️</div>
+    <div class="paper">
+      <div class="letter" id="letter">
+        <!-- Aquí va tu carta completa -->
+        Hace unos días, dentro de mis pensamientos, sentí que perdía la memoria, pero no del todo...
+        <!-- (Pega todo tu texto aquí tal como lo escribiste) -->
       </div>
     </div>
-
-    <div class="editor" id="editorPanel">
-      <label>Color fondo <input type="color" id="bgColor" value="#fff6f4"></label>
-      <label>Color papel <input type="color" id="paperColor" value="#fffdf9"></label>
-      <label>Color acento <input type="color" id="accentColor" value="#8b3a3a"></label>
-      <label>Fuente <input type="text" id="fontFamily" placeholder="Georgia, serif" value="Georgia, serif"></label>
-      <label>Tamaño letra <input type="text" id="fontSize" placeholder="18px" value="18px"></label>
-      <label>Imagen fondo URL <input type="url" id="bgImage" placeholder="https://..."></label>
-    </div>
-
-    <div class="paper" id="paper">
-      <div class="letter" id="letter" contenteditable="false">
-        Querida persona,
-        <br><br>
-        Hace unos días, dentro de mis pensamientos, sentí que perdía la memoria, pero no del todo; era como reconstruir una historia larga con escenas sueltas, y en ese intento terminé de ordenar algo que ya venía sintiendo desde hace tiempo, pero que ahora tengo claro de verdad.
-Uno nunca pierde completamente el camino, solo deja de verlo por todo lo que se acumula encima. Ese camino —la vida— a veces se llena de hierba, de piedras, de cosas que no supimos manejar en su momento; no porque no quisiéramos, sino porque no teníamos la altura, la experiencia o la claridad suficiente para hacerlo mejor.
-Y en medio de esa hierba pasan cosas. Aparecen situaciones, personas, momentos que lastiman, que dejan miedo, que cambian la forma en la que uno vuelve a caminar. Y aunque después el camino se vea más limpio, la sensación no desaparece tan fácil, porque la mente aprende del dolor y se protege, incluso cuando ya no es necesario.
-Por eso hoy tengo claro muchas cosas. Tengo claro que no basta con querer avanzar, sino que hay que entender cómo camina el otro, con qué carga, con qué heridas, con qué miedo. Porque si no, terminamos exigiendo pasos que la otra persona aún no puede dar. A veces uno quiere correr, mientras el otro recién está aprendiendo a caminar sin sentir que la hierba lo va a cubrir otra vez, y no es falta de ganas, es proceso.
-También tengo claro que no todo lo que cargamos debemos seguir llevándolo. Hay cosas —esa maleza— que sostuvimos tanto tiempo que nos cegaron, y tal vez la solución no era cargarla, sino soltarla o aprender a transformarla. Pero eso requería algo que nos faltó: detenernos y comunicarnos de verdad.
-Porque sí, muchas veces seguimos avanzando sin hablar lo suficiente, pensando que el otro iba a entender o que el tiempo lo iba a arreglar, y en ese proceso dejamos de vernos como realmente éramos.
-No te digo esto para cambiar lo que pasó, porque sé que ya pasó. Sé que ha pasado tiempo, sé que las cosas pueden no ser iguales, incluso sé que podrías estar con alguien más o viviendo algo distinto. No te escribo para competir con eso ni para interrumpirlo.
-Te escribo porque hoy lo tengo claro y lo sostengo.
-No es que recién me esté dando cuenta. Muchas cosas ya estaban en mí, incluso cuando no las decía bien o no sabía cómo sostenerlas. Y sí, puede que pienses que esto debí hacerlo antes, decirlo antes o actuar diferente en su momento… y tienes razón en parte. Pero también sé que uno no actúa mejor cuando no está listo para hacerlo mejor.
-Hoy no te hablo desde la duda ni desde la reacción, te hablo desde algo que ya procesé, que ya trabajé y que ahora sí puedo sostener.
-No te lo digo tarde, te lo digo claro.
-Tú me conoces, sabes cómo soy, directo, sin rodeos, y por eso te lo digo así: no he estado con nadie desde que terminamos, no porque no pudiera, sino porque no quise. Ese impulso de aparentar, de demostrar que uno “está bien” o de compararse, ya no va conmigo.
-Me enfoqué en mí, en mi familia, en ordenar cosas que debí trabajar hace tiempo, y hoy estoy bien, pero bien de verdad, sin necesidad de llenar vacíos con personas pasajeras. Es mi vida, y no quiero mancharla con eso.
-Porque tengo claro algo importante: no quiero muchos caminos, no quiero ir probando con distintas personas, quiero construir uno solo, bien hecho, consciente, con alguien que de verdad importe.
-Y sí… esa persona para mí sigues siendo tú.
-No te lo digo desde el orgullo ni esperando verme de cierta forma ante ti. No me importa si en algún momento piensas que estoy por debajo o que me tienes “ahí”. Esto no va de eso. Va de que estoy siendo honesto, transparente, y estoy yendo por lo que quiero.
-Y lo que quiero eres tú.
-Si en algún momento hablé o actué desde la inmadurez, lo reconozco. Incluso me pido perdón a mí mismo por eso, porque sé que no soy así realmente. Pero tampoco voy a seguir viviendo influenciado por errores, por lo que otros hacen o por ideas equivocadas. Hoy tengo claridad.
-No sé cómo estés tú ahora. No sé si tienes miedo, o si te sientes bien llevando las cosas como están, conociendo a otras personas, sintiéndote tranquila. Recuerdo que alguna vez me dijiste que estabas bien… y que en la relación dejaste de sentirte así.
-Y también entiendo algo más:
-que tal vez hayas avanzado a tu manera, que estés viviendo cosas nuevas o simplemente encontrando tu espacio, y que por eso te cueste mirar atrás.
-Que incluso puedas sentir que ya es tarde, o que hay cosas que no sabrías cómo decir.
-Y está bien.
-No te estoy pidiendo explicaciones ni cuentas.
-Solo quiero que sepas que yo sí estoy siendo honesto, sin nada que ocultar, sin inventar ni presumir algo que no soy.
-Lo que te digo viene claro, sin mezcla… y con la intención de hacer las cosas bien.
-Y tienes razón en algo: una relación no es una cárcel. Pero tampoco debería ser un lugar donde uno se pierde.
-Por eso esto no es presión, ni exigencia. Es decisión.
-Si algo tengo claro es que amar también es decidir. Y yo estoy decidido.
-Decidido a hacerlo bien, a comunicar, a no correr cuando hay que caminar, a no soltar cuando el camino se pone difícil.
-Porque esto… no empezó ahora.
-Mis manos escribieron esto,
-pero mi cabeza y mi corazón lo decidieron hace mucho,
-incluso en el tiempo donde no estábamos el uno para el otro.
-Y sí, puede que todo haya cambiado, pero eso no significa que no pueda ser mejor. Porque no se trata de volver a lo mismo, sino de construir algo distinto, más consciente, más real.
-Porque la vida siempre va a tener de todo: hierba, piedras, tormentas… pero también momentos que valen la pena. Y al final, todo se resume en qué tanto estamos dispuestos a caminar juntos, entendiendo lo que cada uno lleva.
-Y dentro de todo lo que soy… sigues siendo tú.
-“Digas lo que digas, sigues siendo ese mundo que gira en su propia órbita. No quiero que gires por mí, ni ser el sol que te obligue a hacerlo; prefiero ser esa luz que te acompaña sin consumirse, esa energía que no te ata, pero tampoco se pierde. Quiero observarte con calma, descubrirte en cada detalle, como quien mira el cielo y encuentra en las estrellas algo infinito, porque no se trata de poseer un universo, sino de aprender a contemplarlo sin destruirlo.”
-Y después de todo esto… tampoco quiero que se quede solo en palabras.
-No te estoy diciendo “empecemos de cero”, porque no somos desconocidos ni todo lo que hubo se borra así nomás. Lo que hubo cuenta, lo que pasó enseña, y lo que se construyó… se puede reforzar, pero mejor.
-No sé si tú quieras intentarlo desde otro lugar, más claro, más consciente… pero yo sí sé que puedo hacerlo diferente.
-Ahora, también te lo digo a mi manera…
-¿Quieres que luche por ti?
-¿Quieres que te vuelva a enamorar?
-¿Que te conozca de nuevo, pero bien esta vez… mientras sanamos lo que quedó mal?
-Pues venga.
-Porque sí, soy hombre… y me toca admitir que a veces fui un tonto, se me durmieron cosas que debía tener claras… pero aquí siguen, más firmes, más conscientes, más listos.
-Y no se trata solo de lo que digo, se trata de lo que puedo hacer.
-Tengo cabeza para pensar, corazón para sentir… y creatividad de sobra cuando se trata de algo que me importa. No soy perfecto, pero cuando quiero algo de verdad, no me quedo a medias.
-Y tú lo sabes.
-No te prometo algo vacío, pero sí te digo esto:
-puedo ser esa persona que no solo aparece… sino que construye, que propone, que hace que las cosas pasen.
-No desde la presión… sino desde las ganas reales.
-Y bueno… con todo respeto,
-qué bonitos ojos tienes.
-Te extraño… y te amo, mi constelación de lunares favorita.
-Y bueno… me debes un beso por cada palabra de este camino que leíste,
-aunque sea en mis sueños… ya es un comienzo.
-        <br><br>
-        Respeta las reglas por favor.
-        <br><br>
-        Con cariño,
-        <br>
-        Alejandro
-      </div>
-      <div class="play-overlay hidden" id="playOverlay">
-        <div style="text-align:center;margin-bottom:8px;">Reproducción bloqueada por el navegador</div>
-        <button id="manualPlay" class="btn">Permitir reproducir</button>
-      </div>
-    </div>
-
     <div class="footer">
-      <div class="share">
-        <div class="status" id="status">Estado: listo</div>
-      </div>
-
-      <div class="final-actions">
-        <button id="finalButton" class="small hidden">Cuando estés lista si lo estás presiona este botón, no antes</button>
-        <a id="whatsappBtn" class="hidden" href="#" target="_blank">Enviar WhatsApp</a>
-        <a id="callBtn" class="hidden" href="#">Llamar</a>
-      </div>
+      <button id="finalButton">Cuando estés lista si lo estás presiona este botón, no antes</button><br>
+      <a id="whatsappBtn" href="https://wa.me/+51937587368" target="_blank">Enviar WhatsApp</a>
+      <a id="callBtn" href="tel:+51967028512">Llamar</a>
     </div>
-
-    <!-- Audios: reemplaza src por tus canciones -->
-    <audio id="audio1" src="https://youtu.be/24u3NoPvgMw?si=cVJ0M5xI083xNdmr" preload="auto"></audio>
-    <audio id="audio2" src="https://youtu.be/24u3NoPvgMw?si=cVJ0M5xI083xNdmr" preload="auto"></audio>
-
   </div>
 </div>
 
+<!-- Audio: usa un archivo MP3 subido a tu repositorio -->
+<audio id="audio1" src="audio/micancion.mp3" preload="auto"></audio>
+
 <script>
-const config = {
-  startDelay: 3,
-  readingWpm: 200,
-  audios: ['audio1','audio2'],
-  whatsappNumber: '+51900000000',
-  phoneNumber: '+51900000000'
-};
-
-const card = document.getElementById('card');
-const styleSelect = document.getElementById('styleSelect');
-const letterEl = document.getElementById('letter');
-const editToggle = document.getElementById('editToggle');
-const editorPanel = document.getElementById('editorPanel');
-const saveLink = document.getElementById('saveLink');
-const copyLink = document.getElementById('copyLink');
-const bgColor = document.getElementById('bgColor');
-const paperColor = document.getElementById('paperColor');
-const accentColor = document.getElementById('accentColor');
-const fontFamily = document.getElementById('fontFamily');
-const fontSize = document.getElementById('fontSize');
-const bgImage = document.getElementById('bgImage');
-const bgPreview = document.getElementById('bgPreview');
-const status = document.getElementById('status');
-const finalButton = document.getElementById('finalButton');
-const whatsappBtn = document.getElementById('whatsappBtn');
-const callBtn = document.getElementById('callBtn');
-const playOverlay = document.getElementById('playOverlay');
-const manualPlay = document.getElementById('manualPlay');
-
-let editing = false;
-let readingTimeSec = 0;
-let autoScrollRAF = null;
+const audio = document.getElementById('audio1');
 let fadeRAF = null;
-let audioElements = config.audios.map(id => document.getElementById(id));
 
-/* Presets */
-function applyPreset(name){
-  card.classList.remove('preset-romantic','preset-minimal');
-  if(name === 'minimal') card.classList.add('preset-minimal');
-  else card.classList.add('preset-romantic');
-  // set default colors/fonts for each preset
-  if(name === 'minimal'){
-    bgColor.value = '#f6f7fb'; paperColor.value = '#ffffff'; accentColor.value = '#0a84ff';
-    fontFamily.value = 'Inter, system-ui, sans-serif'; fontSize.value = '17px'; bgImage.value = '';
-  } else {
-    bgColor.value = '#fff6f4'; paperColor.value = '#fffdf9'; accentColor.value = '#8b3a3a';
-    fontFamily.value = 'Georgia, serif'; fontSize.value = '18px'; bgImage.value = '';
-  }
-  applyStylesFromInputs();
-}
+// Reproduce después de 5 segundos
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    audio.play().catch(()=>{});
+    startFade();
+  }, 5000);
+});
 
-/* Apply styles */
-function applyStylesFromInputs(){
-  document.documentElement.style.setProperty('--bg', bgColor.value);
-  document.documentElement.style.setProperty('--paper', paperColor.value);
-  document.documentElement.style.setProperty('--accent', accentColor.value);
-  document.documentElement.style.setProperty('--font', fontFamily.value || 'Georgia, serif');
-  letterEl.style.fontSize = fontSize.value || '18px';
-  const img = bgImage.value.trim();
-  bgPreview.style.backgroundImage = img ? `url(${img})` : '';
-}
-
-/* Reading time */
-function calculateReadingTime(text){
-  const words = (text.trim().split(/\s+/).filter(Boolean)).length;
-  const minutes = words / config.readingWpm;
-  return Math.max(3, Math.round(minutes * 60));
-}
-
-/* Auto-scroll */
-function startAutoScroll(durationSec){
-  const container = document.querySelector('.paper');
-  const start = container.scrollTop;
-  const maxScroll = container.scrollHeight - container.clientHeight;
-  const distance = Math.max(0, maxScroll - start);
-  const startTime = performance.now();
-  if(autoScrollRAF) cancelAnimationFrame(autoScrollRAF);
-  function step(now){
-    const t = Math.min(1, (now - startTime) / (durationSec * 1000));
-    container.scrollTop = start + distance * t;
-    if(t < 1) autoScrollRAF = requestAnimationFrame(step);
-  }
-  autoScrollRAF = requestAnimationFrame(step);
-}
-
-/* Play sequence with global fade */
-async function playSequence(totalDurationSec){
-  status.textContent = 'Estado: preparando reproducción...';
-  await delay(config.startDelay * 1000);
-  try {
-    for(const a of audioElements){ a.pause(); a.currentTime = 0; a.volume = 1; }
-    await audioElements[0].play();
-    startFade(totalDurationSec);
-    const perAudio = Math.max(1, Math.floor(totalDurationSec / audioElements.length));
-    for(let i=0;i<audioElements.length;i++){
-      const a = audioElements[i];
-      if(a.paused) await a.play().catch(()=>{});
-      await delay(perAudio * 1000);
-      if(i < audioElements.length - 1) a.pause();
-    }
-    stopAllAudio();
-    onFinish();
-  } catch (e) {
-    playOverlay.classList.remove('hidden');
-    status.textContent = 'Estado: reproducción bloqueada, requiere interacción.';
-  }
-}
-
-function startFade(totalDurationSec){
+// Fade out progresivo según duración estimada
+function startFade(){
+  const letterText = document.getElementById('letter').innerText;
+  const words = letterText.trim().split(/\s+/).length;
+  const readingTimeSec = Math.max(10, Math.round((words/200)*60)); // mínimo 10s
   const start = performance.now();
-  if(fadeRAF) cancelAnimationFrame(fadeRAF);
+
   function step(now){
-    const t = Math.min(1, (now - start) / (totalDurationSec * 1000));
-    const vol = Math.max(0, 1 - t);
-    audioElements.forEach(a => a.volume = vol);
+    const t = Math.min(1, (now - start) / (readingTimeSec*1000));
+    audio.volume = Math.max(0, 1 - t);
     if(t < 1) fadeRAF = requestAnimationFrame(step);
+    else audio.pause();
   }
   fadeRAF = requestAnimationFrame(step);
 }
-
-function stopAllAudio(){ audioElements.forEach(a => { a.pause(); a.currentTime = 0; a.volume = 1; }); }
-
-function onFinish(){
-  status.textContent = 'Estado: lectura finalizada';
-  finalButton.classList.remove('hidden');
-  whatsappBtn.classList.remove('hidden');
-  callBtn.classList.remove('hidden');
-  whatsappBtn.href = `https://wa.me/${encodeURIComponent(config.whatsappNumber.replace(/\D/g,''))}`;
-  callBtn.href = `tel:${encodeURIComponent(config.phoneNumber.replace(/\s/g,''))}`;
-}
-
-function delay(ms){ return new Promise(res => setTimeout(res, ms)); }
-
-/* Save/load state in URL */
-function saveStateToUrl(){
-  const state = { text: letterEl.innerHTML, styles: { bgColor: bgColor.value, paperColor: paperColor.value, accentColor: accentColor.value, fontFamily: fontFamily.value, fontSize: fontSize.value, bgImage: bgImage.value, preset: styleSelect.value } };
-  const json = JSON.stringify(state);
-  const encoded = btoa(unescape(encodeURIComponent(json)));
-  const url = location.origin + location.pathname + '#data=' + encoded;
-  history.replaceState(null, '', url);
-  status.textContent = 'Estado: enlace actualizado';
-  return url;
-}
-
-function loadStateFromUrl(){
-  const hash = location.hash || '';
-  if(!hash.includes('data=')) return;
-  try{
-    const encoded = hash.split('data=')[1];
-    const json = decodeURIComponent(escape(atob(encoded)));
-    const state = JSON.parse(json);
-    if(state.text) letterEl.innerHTML = state.text;
-    if(state.styles){
-      bgColor.value = state.styles.bgColor || bgColor.value;
-      paperColor.value = state.styles.paperColor || paperColor.value;
-      accentColor.value = state.styles.accentColor || accentColor.value;
-      fontFamily.value = state.styles.fontFamily || fontFamily.value;
-      fontSize.value = state.styles.fontSize || fontSize.value;
-      bgImage.value = state.styles.bgImage || bgImage.value;
-      styleSelect.value = state.styles.preset || styleSelect.value;
-      applyPreset(styleSelect.value);
-      applyStylesFromInputs();
-    }
-    status.textContent = 'Estado: contenido cargado desde enlace';
-  }catch(e){ console.warn('No se pudo cargar estado', e); }
-}
-
-/* UI events */
-styleSelect.addEventListener('change', ()=> applyPreset(styleSelect.value));
-editToggle.addEventListener('click', ()=>{
-  editing = !editing;
-  letterEl.contentEditable = editing ? "true" : "false";
-  editToggle.textContent = editing ? 'Listo' : 'Editar';
-  editorPanel.style.display = editing ? 'flex' : 'none';
-  if(!editing) preparePlayback();
-});
-[bgColor,paperColor,accentColor,fontFamily,fontSize,bgImage].forEach(inp=> inp.addEventListener('input', applyStylesFromInputs));
-saveLink.addEventListener('click', ()=> { saveStateToUrl(); alert('Enlace generado y guardado en la barra de direcciones.'); });
-copyLink.addEventListener('click', async ()=> { const url = saveStateToUrl(); try{ await navigator.clipboard.writeText(url); status.textContent = 'Estado: enlace copiado al portapapeles'; }catch(e){ alert('Copia manual: ' + url); } });
-
-function preparePlayback(){
-  finalButton.classList.add('hidden'); whatsappBtn.classList.add('hidden'); callBtn.classList.add('hidden');
-  status.textContent = 'Estado: listo';
-  const text = letterEl.innerText || letterEl.textContent || '';
-  readingTimeSec = calculateReadingTime(text);
-  startAutoScroll(readingTimeSec);
-  playSequence(readingTimeSec).catch(()=>{});
-}
-
-manualPlay.addEventListener('click', async ()=>{
-  playOverlay.classList.add('hidden');
-  status.textContent = 'Estado: reproducción manual iniciada';
-  try{
-    for(const a of audioElements) await a.play().catch(()=>{});
-    startFade(readingTimeSec);
-    setTimeout(()=>{ stopAllAudio(); onFinish(); }, readingTimeSec*1000);
-  }catch(e){ console.warn(e); }
-});
-
-finalButton.addEventListener('click', ()=> { alert('Gracias. Ahora puedes elegir enviar un mensaje por WhatsApp o llamar.'); });
-
-/* Inicialización */
-applyPreset('romantic');
-applyStylesFromInputs();
-loadStateFromUrl();
-preparePlayback();
 </script>
 </body>
 </html>
