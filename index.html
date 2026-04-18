@@ -20,6 +20,9 @@
 :root{
 --bg:#fff8ef; --paper:#fffdf8; --accent:#6b4f4f; --text:#222; --font:"Georgia", serif; --padding:28px;
 }
+
+  
+  
 html,body{height:100%;margin:0;font-family:var(--font);background:var(--bg);color:var(--text);}
 .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px;}
 .card{width:720px;max-width:95%;background:var(--paper);box-shadow:0 10px 30px rgba(0,0,0,0.12);border-radius:12px;padding:var(--padding);}
@@ -50,6 +53,21 @@ transform:scale(1.05);
 .card{padding:16px;}
 .letter{font-size:16px;}
 }
+ /* Verso */
+.verse {
+  margin-top: 30px;
+  font-family: 'Georgia', serif;
+  font-style: italic;
+}
+
+.verse p {
+  margin: 5px 0;
+}
+
+.bold {
+  font-weight: bold;
+  color: #d35400; /* color cálido */
+} 
 </style>
 </head>
 
@@ -132,9 +150,24 @@ Y bueno… me debes un beso por cada palabra de esto que leíste,
 aunque haya pasado en mis sueños… pero ya sabes el resto.
 
 P.D.: Espero que estés bien, que te estés cuidando y no te estés saltando comidas.
-</div>
-</div>
 
+  
+</div>
+</div>
+<div class="verse">
+  <p>Un taquito por favor 🌮</p>
+  <p><span class="bold">A</span>unque <span class="bold">n</span>o <span class="bold">t</span>enga <span class="bold">h</span>ambre,</p>
+  <p><span class="bold">R</span>ealmente <span class="bold">s</span>e <span class="bold">m</span>e <span class="bold">a</span>ntoja,</p>
+  <p><span class="bold">E</span>s <span class="bold">r</span>aro, <span class="bold">p</span>ero <span class="bold">p</span>asa…</p>
+  <p><span class="bold">Y</span> contigo <span class="bold">m</span>ás,</p>
+  <p><span class="bold">O</span> capaz <span class="bold">e</span>s <span class="bold">c</span>oincidencia,</p>
+  <p><span class="bold">U</span>n <span class="bold">a</span>ntojo <span class="bold">n</span>ada <span class="bold">m</span>ás,</p>
+  <p><span class="bold">R</span>aro <span class="bold">p</span>ero <span class="bold">r</span>ico,</p>
+  <p><span class="bold">E</span>staba <span class="bold">p</span>ensándolo,</p>
+  <p><span class="bold">A</span>hora <span class="bold">d</span>ime <span class="bold">t</span>ú,</p>
+  <p><span class="bold">D</span>ebería <span class="bold">h</span>acerlo…?</p>
+  <p>Y o mejor no</p>
+</div>
 <div class="footer">
 <button id="finalButton">Cuando estés lista si lo estás presiona este botón, no antes</button><br>
 
