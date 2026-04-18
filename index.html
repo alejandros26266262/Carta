@@ -68,7 +68,8 @@ transform:scale(1.05);
   font-weight: bold;
   color: #d35400; /* color cálido */
 } 
-.lyrics-rain {
+
+  .rain {
   position: fixed;
   top: 0;
   left: 0;
@@ -79,11 +80,12 @@ transform:scale(1.05);
   z-index: 1; /* detrás del texto principal */
 }
 
-.lyric {
+.drop {
   position: absolute;
-  top: -50px;
-  font-size: 20px;
-  color: rgba(0, 100, 200, 0.25); /* azul suave, baja intensidad */
+  width: 6px;
+  height: 12px;
+  background: rgba(0, 150, 255, 0.25); /* azul suave, baja intensidad */
+  border-radius: 50%;
   animation: fall linear forwards;
 }
 
@@ -94,7 +96,6 @@ transform:scale(1.05);
   }
 }
 
-  
 </style>
 </head>
 
@@ -210,9 +211,8 @@ P.D.: Espero que estés bien, que te estés cuidando y no te estés saltando com
 <!-- Audio -->
 <audio id="audio1" src="The Reason.mp3" preload="auto"></audio>
 <audio id="audio2" src="Sunflower.mp3" preload="auto"></audio>
-  
-  <!-- Animación de letras lluvia -->
-<div id="lyricsRain" class="lyrics-rain hidden"></div>
+<!-- Animación de gotas -->
+<div id="rain" class="rain hidden"></div>
 
 <script>
 const audio1 = document.getElementById('audio1');
@@ -226,26 +226,22 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         audio1.play().catch(()=>{});
         startFade(audio1); // fade para la primera canción
-          // Mostrar letras como lluvia sincronizadas
-    const lyricsRain = document.getElementById('lyricsRain');
-    lyricsRain.classList.remove('hidden');
-
-    const lyrics = "I’m not a perfect person There’s many things I wish I didn’t do But I continue learning I never meant to do those things to you And so, I have to say before I go That I just want you to know I’ve found a reason for me To change who I used to be A reason to start over new And the reason is you I’m sorry that I hurt you It’s something I must live with everyday And all the pain I put you through I wish that I could take it all away And be the one who catches all your tears That’s why I need you to hear I’ve found a reason for me To change who I used to be A reason to start over new And the reason is you And the reason is you And the reason is you And the reason is you I’m not a perfect person I never meant to do those things to you And so I have to say before I go That I just want you to know I’ve found a reason for me To change who I used to be A reason to start over new And the reason is you I’ve found a reason to show A side of me you didn’t know A reason for all that I do And the reason is you"; // puedes poner aquí la letra o fragmentos
-    let index = 0;
+          // Mostrar lluvia de gotas sincronizada
+    const rain = document.getElementById('rain');
+    rain.classList.remove('hidden');
 
     const interval = setInterval(() => {
-      if(index >= lyrics.length){
-        clearInterval(interval);
-        return;
-      }
-      const span = document.createElement('span');
-      span.className = 'lyric';
-      span.textContent = lyrics[index];
-      span.style.left = Math.random() * 95 + "vw"; // posición aleatoria en margen
-      span.style.animationDuration = (3 + Math.random()*2) + "s"; // velocidad caída
-      lyricsRain.appendChild(span);
-      index++;
-    }, 800); // cada 0.8s cae una letra
+      const drop = document.createElement('div');
+      drop.className = 'drop';
+      drop.style.left = Math.random() * 100 + "vw"; // posición aleatoria en ancho
+      drop.style.animationDuration = (2 + Math.random()*2) + "s"; // velocidad caída
+      rain.appendChild(drop);
+
+      // eliminar gotas viejas para no saturar
+      setTimeout(() => {
+        drop.remove();
+      }, 4000);
+    }, 200); // cada 0.2s cae una gota
 
     }, 5000);
 });
