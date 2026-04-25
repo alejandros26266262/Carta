@@ -192,7 +192,7 @@ const finalButton = document.getElementById('finalButton');
 const whatsappBtn = document.getElementById('whatsappBtn');
 const callBtn = document.getElementById('callBtn');
 
-// Música después de 5 segundos
+// Música después de 5 segundos, al ingresar a la página
 window.addEventListener('load', () => {
     setTimeout(() => {
         audio1.play().catch(()=>{});
@@ -200,7 +200,7 @@ window.addEventListener('load', () => {
     }, 5000);
 });
 
-// Cuando termine la primera, empieza la segunda
+// Cuando termine la primera, empieza la segunda canción
 audio1.addEventListener('ended', () => {
     audio2.play().catch(()=>{});
     startFade(audio2); // fade para la segunda canción
